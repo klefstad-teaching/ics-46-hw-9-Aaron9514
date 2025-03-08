@@ -15,7 +15,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     minHeap.push({source, 0});
 
     while (!minHeap.empty()) {
-        pair<int, int> node = minHeap.top();
+        Node node = minHeap.top();
         minHeap.pop();
         if (!visited[node.first]) {
             visited[node.first] = true;
@@ -30,4 +30,19 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
         }
     }
     return distances;
+}
+
+vector<int> extract_shortest_path(const vector<int>& distances, const vector<int>& previous, int dest)
+{
+    stack<int> path;
+    path.push(dest);
+    for (int cur = previous[dest]; cur != -1; cur = previous[cur])
+        path.push(cur);
+    // convert stack into vector
+    vector<int> vec_path;
+    while(!path.empty()) {
+        vec_path.push_back(path.top());
+        path.pop();
+    }
+    return vec_path;
 }
