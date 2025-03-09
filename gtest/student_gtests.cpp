@@ -78,3 +78,13 @@ TEST(test_dijkstras, test_previous_1_medium)
     dijkstra_shortest_path(g, 1, prev);
     EXPECT_EQ(prev, result);
 }
+
+TEST(test_word_ladder, test_edit_distance)
+{
+    EXPECT_TRUE(edit_distance_within("apple", "appl", 1));
+    EXPECT_TRUE(edit_distance_within("bo", "bot", 1));
+    EXPECT_TRUE(edit_distance_within("hanger", "hangar", 1));
+    EXPECT_FALSE(edit_distance_within("anger", "angry", 1));
+    EXPECT_TRUE(edit_distance_within("zoom", "zoo",1));
+    EXPECT_TRUE(edit_distance_within("apple", "bapple",1));
+}

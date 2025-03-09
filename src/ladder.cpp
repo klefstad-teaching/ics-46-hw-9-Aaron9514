@@ -11,6 +11,8 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
 {
     if (begin_word == end_word) 
         error(begin_word, end_word, "are the same word");
+    else if (word_list.find(end_word) == word_list.end())
+        error(begin_word, end_word, "end word is not in the word list");
     else {
         queue<vector<string>> ladder_q;
         ladder_q.push({begin_word});
@@ -40,12 +42,12 @@ bool is_adjacent(const string& word1, const string& word2)
 {
     int distance = word1.length() - word2.length();
     if (abs(distance) > 1) return false;
-    return edit_distance_within(word1, word2, 0);
+    return edit_distance_within(word1, word2, 1);
 }
 
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d)
 {
-    if (d > 1) return false;    // to escape algorithm sooner
+    if (d < 0) return false;    // to escape algorithm sooner
     if (str1.size() == 0)       // hit the end of one of the strings
         d += str2.size();
     else if (str2.size() == 0)
@@ -54,12 +56,12 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
         if (str1[0] == str2[0]) // current chars are equal
             return edit_distance_within(str1.substr(1), str2.substr(1), d);
         if (str1.size() < str2.size())  // chars not equal, case 1
-            return edit_distance_within(str1, str2.substr(1), d + 1);
+            return edit_distance_within(str1, str2.substr(1), d - 1);
         if (str1.size() > str2.size())  //                  case 2
-            return edit_distance_within(str1.substr(1), str2, d + 1);
-        return edit_distance_within(str1.substr(1), str2.substr(1), d + 1); // case 3
+            return edit_distance_within(str1.substr(1), str2, d - 1);
+        return edit_distance_within(str1.substr(1), str2.substr(1), d - 1); // case 3
     }
-    return d <= 1;
+    return d >= 0;
 }
 
 void load_words(set<string> & word_list, const string& file_name)
@@ -74,6 +76,7 @@ void print_word_ladder(const vector<string>& ladder)
 {
     for (string word : ladder)
         cout << word << " ";
+    cout << endl;
 }
 
 void verify_word_ladder() {

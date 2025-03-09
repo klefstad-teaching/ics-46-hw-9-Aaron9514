@@ -8,5 +8,6 @@ int main(int argc, char * argv[])
         print_word_ladder(generate_word_ladder(argv[1], argv[2], word_list));
           
     else
-        print_word_ladder(generate_word_ladder("cat", "cog", word_list));     
+        print_word_ladder(generate_word_ladder("cat", "cog", word_list));
+    verify_word_ladder();     
 }
