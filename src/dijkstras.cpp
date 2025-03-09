@@ -37,7 +37,7 @@ vector<int> extract_shortest_path(const vector<int>& distances, const vector<int
     if (dest >= previous.size() || dest < 0) return {};
     stack<int> path;
     path.push(dest);
-    for (int cur = previous[dest]; cur != -1; cur = previous[cur])
+    for (int cur = previous.at(dest); cur != -1; cur = previous.at(cur))
         path.push(cur);
     // convert stack into vector
     vector<int> vec_path;
