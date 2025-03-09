@@ -39,23 +39,26 @@ bool is_adjacent(const string& word1, const string& word2)
 {
     int distance = word1.length() - word2.length();
     if (abs(distance) > 1) return false;
-    return edit_distance_within(word1, word2, 1);
+    return edit_distance_within(word1, word2, 0);
 }
 
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d)
 {
-    string str1_cpy = str1;
-    for (size_t i = 0; i < str1.length(); ++i)
-        if (str1[i] != str2[i]) {
-            if (str1.length() < str2.length())  // insert
-                str1_cpy.insert(i, str2, i, 1);
-            else if (str1.length() > str2.length()) // delete
-                str1_cpy.erase(i, 1);
-            else   // substitute
-                str1_cpy[i] = str2[i];
-            break;
-        }
-    return str1_cpy == str2;
+    if (d > 1) return false;    // to escape algorithm sooner
+    if (str1.size() == 0)       // hit the end of one of the strings
+        d += str2.size();
+    else if (str2.size() == 0)
+        d += str1.size();
+    else {
+        if (str1[0] == str2[0]) // current chars are equal
+            return edit_distance_within(str1.substr(1), str2.substr(1), d);
+        if (str1.size() < str2.size())  // chars not equal, case 1
+            return edit_distance_within(str1, str2.substr(1), d + 1);
+        if (str1.size() > str2.size())  //                  case 2
+            return edit_distance_within(str1.substr(1), str2, d + 1);
+        return edit_distance_within(str1.substr(1), str2.substr(1), d + 1); // case 3
+    }
+    return d <= 1;
 }
 
 void load_words(set<string> & word_list, const string& file_name)

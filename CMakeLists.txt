@@ -24,10 +24,10 @@ set(LADDER_SRC_FILES
   src/ladder.cpp
 )
 
-# add_executable(ladder_main
- # ${LADDER_SRC_FILES}
-  # src/ladder_main.cpp
-# )
+ add_executable(ladder_main
+  ${LADDER_SRC_FILES}
+  src/ladder_main.cpp
+ )
 
 find_package(GTest)
 if (GTest_FOUND)
