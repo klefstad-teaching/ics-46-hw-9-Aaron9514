@@ -49,9 +49,9 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
 {
     if (d < 0) return false;    // to escape algorithm sooner
     if (str1.size() == 0)       // hit the end of one of the strings
-        d += str2.size();
+        d -= str2.size();
     else if (str2.size() == 0)
-        d += str1.size();
+        d -= str1.size();
     else {
         if (str1[0] == str2[0]) // current chars are equal
             return edit_distance_within(str1.substr(1), str2.substr(1), d);
@@ -74,6 +74,10 @@ void load_words(set<string> & word_list, const string& file_name)
 
 void print_word_ladder(const vector<string>& ladder)
 {
+    if (ladder.empty())
+        cout << "No word ladder found.";
+    else
+        cout << "Word ladder found: ";
     for (string word : ladder)
         cout << word << " ";
     cout << endl;

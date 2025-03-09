@@ -87,4 +87,5 @@ TEST(test_word_ladder, test_edit_distance)
     EXPECT_FALSE(edit_distance_within("anger", "angry", 1));
     EXPECT_TRUE(edit_distance_within("zoom", "zoo",1));
     EXPECT_TRUE(edit_distance_within("apple", "bapple",1));
+    EXPECT_FALSE(edit_distance_within("apple", "app",1));
 }
