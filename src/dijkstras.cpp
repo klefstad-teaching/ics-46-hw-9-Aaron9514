@@ -6,7 +6,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
 {
     vector<bool> visited(G.numVertices, false);
     vector<int> distances(G.numVertices, INF);
-    previous.resize(G.numVertices, -1);
+    //previous.resize(G.numVertices, -1);
 
     priority_queue<Node, vector<Node>,  // Node is made of a vertex and weight
                 decltype([](Node a, Node b) {return a.second > b.second;})> minHeap;
