@@ -20,7 +20,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
         if (!visited[node.first]) {
             visited[node.first] = true;
             for (Edge e : G[node.first]) {
-                int nweight = node.second + e.weight; // New calculated weight
+                int nweight = distances[node.first] + e.weight; // New calculated weight
                 if (nweight < distances[e.dst]) {
                     minHeap.push({e.dst, nweight}); 
                     distances[e.dst] = nweight;
