@@ -9,22 +9,22 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     previous.resize(G.numVertices, -1);
 
     priority_queue<Node, vector<Node>,  // Node is made of a vertex and weight
-                decltype([](Node a, Node b) {return a.second > b.second;})> minHeap;
+                greater<>> minHeap;
 
     distances[source] = 0;
-    minHeap.push({source, 0});
+    minHeap.push({0, source});
 
     while (!minHeap.empty()) {
         Node node = minHeap.top();
         minHeap.pop();
-        if (!visited[node.first]) {
-            visited[node.first] = true;
-            for (Edge e : G[node.first]) {
-                int nweight = distances[node.first] + e.weight; // New calculated weight
+        if (!visited[node.second]) {
+            visited[node.second] = true;
+            for (Edge e : G[node.second]) {
+                int nweight = distances[node.second] + e.weight; // New calculated weight
                 if (!visited[e.dst] && nweight < distances[e.dst]) {
-                    minHeap.push({e.dst, nweight}); 
+                    minHeap.push({nweight, e.dst}); 
                     distances[e.dst] = nweight;
-                    previous[e.dst] = node.first;
+                    previous[e.dst] = node.second;
                 }
             }
         }
@@ -35,7 +35,8 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
 vector<int> extract_shortest_path(const vector<int>& distances, const vector<int>& previous, int destination)
 {
     stack<int> path;
-    for (int cur = destination; cur != -1; cur = previous[cur])
+    path.push(destination);
+    for (int cur = previous[destination]; cur != -1; cur = previous[cur])
         path.push(cur);
     // convert stack into vector
     vector<int> vec_path;
